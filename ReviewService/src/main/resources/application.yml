@@ -1,0 +1,48 @@
+server:
+  port: 8094
+
+spring:
+  application:
+    name: ReviewService
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: library
+  zipkin:
+    base-url: http://localhost:9411/
+
+sleuth:
+  sampler:
+    probability: 1 #100% (default = 10%
+
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework: ERROR
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,
+        http://localhost:8762/eureka/
+
+  kafka:
+    consumer:
+      group-id: gid
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#  app:
+#    updateCustomer: updateCustomer
+#    updateBook: updateBook
